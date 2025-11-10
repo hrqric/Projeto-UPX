@@ -1,0 +1,112 @@
+/* Fundo da página e container geral */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #cccc; /* azul escuro */
+  padding: 20px;
+  color: rgb(255, 255, 255);
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header com logo */
+.home-header {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 100px;
+}
+
+.home-header h2 {
+  font-size: 2.5rem; /* aumenta o tamanho */
+  font-weight: 700;   /* opcional, deixa mais negrito */
+  color: #0f4c81;     /* garante contraste com o fundo */
+}
+
+
+.facens-logo {
+  height: 100px;
+  width: 200px;
+}
+
+/* Conteúdo principal */
+.home-content {
+  background: #1b263b; /* azul mais claro */
+  padding: 100px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-align: center;
+  width: 1200%;
+  max-width: 900px;
+}
+
+/* Grid de dias da semana */
+.dias-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+/* Card de cada dia */
+.dia-card {
+  padding: 15px;
+  border-radius: 12px;
+  background: #0f4c81; /* azul médio */
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.dia-card.presente {
+  background: #3ebd6b; /* verde */
+  color: #fff;
+  font-weight: bold;
+}
+
+.dia-card.ausente {
+  background: #e63946; /* vermelho */
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Botões */
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-presenca {
+  background: #0077b6;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-presenca:hover {
+  background: #00b4d8;
+}
+
+.btn-sair {
+  background: #d90429;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-sair:hover {
+  background: #ef233c;
+}
+
