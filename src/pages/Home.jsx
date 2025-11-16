@@ -4,27 +4,52 @@ export default function Home({ user }) {
   const [presencaMarcada, setPresencaMarcada] = useState(false);
   const [horario, setHorario] = useState("");
 
-  const handlePresenca = () => {
-    const now = new Date();
-    const horarioFormatado = now.toLocaleTimeString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    setPresencaMarcada(true);
-    setHorario(horarioFormatado);
+  // --- FUNÇÃO MODIFICADA ---
+  const handlePresenca = async () => {
+    try {
+      // 1. Tenta acessar a câmera
+      console.log("Solicitando acesso à câmera...");
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      console.log("Acesso à câmera permitido.");
+      
+      // Para a trilha da câmera, já que só queríamos a permissão
+      stream.getTracks().forEach(track => track.stop());
 
-    // Efeito de alerta animado (simples)
-    const box = document.getElementById("feedback-box");
-    box.classList.add("animate-feedback");
-    setTimeout(() => {
-      box.classList.remove("animate-feedback");
-    }, 1500);
+      // 2. Se deu certo, continua com a lógica original
+      const now = new Date();
+      const horarioFormatado = now.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      setPresencaMarcada(true);
+      setHorario(horarioFormatado);
+
+      // Efeito de alerta animado
+      const box = document.getElementById("feedback-box");
+      if (box) {
+        box.classList.add("animate-feedback");
+        setTimeout(() => {
+          box.classList.remove("animate-feedback");
+        }, 1500);
+      }
+
+    } catch (err) {
+      // 3. Se falhar, avisa o usuário
+      if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+        alert("Você precisa permitir o acesso à câmera para marcar presença!");
+      } else {
+        console.error("Erro ao acessar câmera:", err);
+        alert("Não foi possível acessar a câmera.");
+      }
+    }
   };
+  // --- FIM DA MODIFICAÇÃO ---
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-blue-50 to-blue-100 p-10">
       {/* Logo no canto superior direito */}
       <div className="w-full flex justify-end mb-6">
+        {/* <img ... /> (seu logo aqui se precisar) */}
       </div>
 
       {/* Card principal */}

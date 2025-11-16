@@ -25,30 +25,42 @@ export default function Chamada({ user }) {
     fetchPresencas();
   }, [user]);
 
-
-  /*const handlePresenca = async () => {
-  const agora = new Date();
-  const horario = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-  const dia = agora.getDay();
-
-  alert(`Presença confirmada às ${horario}`);
-  setPresencas({ ...presencas, [dia]: horario });
-};*/
-
+  // --- FUNÇÃO MODIFICADA ---
   const handlePresenca = async () => {
-    const agora = new Date();
-    const data = agora.toISOString().slice(0, 10);
-    const horario = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-
     try {
+      // 1. Tenta acessar a câmera primeiro
+      console.log("Solicitando acesso à câmera...");
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      console.log("Acesso à câmera permitido.");
+
+      // 2. Para a trilha de vídeo (só queríamos a permissão)
+      stream.getTracks().forEach(track => track.stop());
+
+      // 3. Se a câmera foi acessada, continua com o registro
+      const agora = new Date();
+      const data = agora.toISOString().slice(0, 10);
+      const horario = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+
       await axios.post("http://localhost:5000/api/presenca", { aluno: user, data, horario });
       alert(`Presença confirmada às ${horario}`);
       setPresencas({ ...presencas, [agora.getDay()]: horario });
+
     } catch (err) {
-      console.error("Erro ao enviar presença:", err);
-      alert("Erro ao registrar presença!");
+      // Trata erros da câmera ou do axios
+      if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+        alert("Você precisa permitir o acesso à câmera para marcar presença!");
+      } else if (err.response) {
+        // Erro do axios
+        console.error("Erro ao enviar presença:", err);
+        alert("Erro ao registrar presença!");
+      } else {
+        // Outros erros (ex: câmera não encontrada)
+        console.error("Erro:", err);
+        alert("Não foi possível acessar a câmera ou registrar a presença.");
+      }
     }
   };
+  // --- FIM DA MODIFICAÇÃO ---
 
   const handleLogout = () => {
     localStorage.removeItem("user");
