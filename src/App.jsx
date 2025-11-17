@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Faltas from "./pages/Faltas";
 import Sobre from "./pages/Sobre";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,6 +43,21 @@ function App() {
             )
           }
         />
+
+                  <Route
+          path="/register"
+          element={
+            user ? (
+              <>
+                <Header />
+                <Register user={user} />
+              </>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
         <Route
           path="/faltas"
           element={

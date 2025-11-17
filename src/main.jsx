@@ -4,7 +4,5 @@ import App from "./App";
 import "./index.css"; // Tailwind ou CSS global
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <App />
-  </React.StrictMode>
 );

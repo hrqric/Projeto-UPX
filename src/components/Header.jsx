@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header className="bg-blue-400 text-white shadow-md">
+    <header className="bg-blue-600 text-white shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         {/* Logo da FACENS */}
         <div className="flex items-center gap-2">
@@ -32,6 +32,14 @@ export default function Header() {
                 className="hover:text-gray-200 transition-colors"
               >
                 Visualizar Faltas
+              </Link>
+            </li>
+                        <li>
+              <Link
+                to="/register"
+                className="hover:text-gray-200 transition-colors"
+              >
+                Cadastrar
               </Link>
             </li>
             <li>
